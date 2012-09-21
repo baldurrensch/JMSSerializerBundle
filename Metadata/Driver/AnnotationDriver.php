@@ -50,6 +50,9 @@ use JMS\SerializerBundle\Metadata\ClassMetadata;
 use JMS\SerializerBundle\Metadata\PropertyMetadata;
 use JMS\SerializerBundle\Metadata\VirtualPropertyMetadata;
 use Metadata\Driver\DriverInterface;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\ManyToMany;
 
 class AnnotationDriver implements DriverInterface
 {
@@ -167,6 +170,8 @@ class AnnotationDriver implements DriverInterface
                         $propertyMetadata->groups = $annot->groups;
                     } else if ($annot instanceof Inline) {
                         $propertyMetadata->inline = true;
+                    } else if ($annot instanceof ManyToOne || $annot instanceof OneToMany || $annot instanceof ManyToMany) {
+                        $isExclude = true;
                     }
                 }
 
